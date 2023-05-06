@@ -1,0 +1,6 @@
+#mongodb+srv://turkcell-mongodb:<password>@cluster0.z6jqu1l.mongodb.net/?retryWrites=true&w=majority
+spring:
+  data:
+    mongodb:
+      database: filterdb-t2
+      uri: mongodb://localhost:27017
