@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FilterManager implements FilterService {
     private final FilterRepository repository;
-    private ModelMapperService mapper;
+    private final ModelMapperService mapper;
 
     @Override
     public List<GetAllFiltersResponse> getAll() {
