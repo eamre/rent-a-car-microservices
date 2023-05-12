@@ -14,15 +14,15 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="models")
+@Table(name = "models")
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
     @ManyToOne
-    @JoinColumn(name="brand_id")
+    @JoinColumn(name = "brand_id")
     private Brand brand;
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private List<Car> cars;
 }
