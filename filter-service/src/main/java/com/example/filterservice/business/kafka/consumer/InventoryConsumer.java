@@ -2,9 +2,9 @@ package com.example.filterservice.business.kafka.consumer;
 
 import com.example.filterservice.business.abstracts.FilterService;
 import com.example.filterservice.entity.Filter;
-import com.kodlamaio.commonpackage.events.BrandDeletedEvent;
-import com.kodlamaio.commonpackage.events.CarCreatedEvent;
-import com.kodlamaio.commonpackage.events.CarDeletedEvent;
+import com.kodlamaio.commonpackage.events.inventory.BrandDeletedEvent;
+import com.kodlamaio.commonpackage.events.inventory.CarCreatedEvent;
+import com.kodlamaio.commonpackage.events.inventory.CarDeletedEvent;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.kodlamaio.inventoryservice.business.concretes;
 
-import com.kodlamaio.commonpackage.events.CarCreatedEvent;
-import com.kodlamaio.commonpackage.events.CarDeletedEvent;
+import com.kodlamaio.commonpackage.events.inventory.CarCreatedEvent;
+import com.kodlamaio.commonpackage.events.inventory.CarDeletedEvent;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import com.kodlamaio.inventoryservice.business.abstracts.CarService;
 import com.kodlamaio.inventoryservice.business.dto.requests.create.CreateCarRequest;
@@ -11,6 +11,7 @@ import com.kodlamaio.inventoryservice.business.dto.responses.get.GetAllCarsRespo
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetCarResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import com.kodlamaio.inventoryservice.business.kafka.producer.InventoryProducer;
+import com.kodlamaio.inventoryservice.business.rules.CarBusinessRules;
 import com.kodlamaio.inventoryservice.entities.Car;
 import com.kodlamaio.inventoryservice.entities.enums.State;
 import com.kodlamaio.inventoryservice.repository.CarRepository;
@@ -26,6 +27,7 @@ public class CarManager implements CarService {
     private final ModelMapperService mapper;
     private final CarRepository repository;
     private final InventoryProducer inventoryProducer;
+    private final CarBusinessRules rules;
 
     @Override
     public List<GetAllCarsResponse> getAll() {
@@ -74,6 +76,17 @@ public class CarManager implements CarService {
     public void delete(UUID id) {
         repository.deleteById(id);
         sendKafkaCarDeletedEvent(id);
+    }
+
+    @Override
+    public void checkIfCarAvailable(UUID id) {
+        rules.checkIfCarExists(id);
+        rules.checkCarAvailability(id);
+    }
+
+    @Override
+    public void changeStateByCarId(State state, UUID id) {
+        repository.changeStateByCarId(state, id);
     }
 
     private void sendKafkaCarCreatedEvent(Car createdCar) {
