@@ -25,5 +25,7 @@ public interface CarService {
 
     ClientResponse checkIfCarAvailable(UUID id);
 
+//    ClientResponse checkIfCarMaintenance(UUID id);
+
     void changeStateByCarId(State state, UUID id);
 }
