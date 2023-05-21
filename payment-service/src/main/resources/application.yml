@@ -1,10 +1,10 @@
 spring:
   application:
-    name: RENTAL-SERVICE
+    name: PAYMENT-SERVICE
   datasource:
     username: postgres
     password: 'sifre'
-    url: jdbc:postgresql://localhost:5432/rentaldb-t2
+    url: jdbc:postgresql://localhost:5432/paymentdb-t2
   jpa:
     properties:
       hibernate:
@@ -20,7 +20,6 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
-
 eureka:
   client:
     fetch-registry: true
@@ -30,17 +29,7 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${random.value}
     prefer-ip-address: true
+
+
 server:
   port: 0
-
-
-resilience4j:
-  retry:
-    instances:
-      rentalInventoryRetry:
-        max-attempts: 3
-        wait-duration: 8s
-      retry-payment:
-        max-attempts: 5
-        wait-duration: 5s
-
