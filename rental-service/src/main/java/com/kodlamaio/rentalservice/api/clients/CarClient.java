@@ -13,4 +13,6 @@ public interface CarClient {
     @GetMapping(value = "/api/cars/check-car-available/{carId}")
     @Retry(name = "rentalInventoryRetry")
     ClientResponse checkIfCarAvailable(@PathVariable UUID carId);
+
+
 }

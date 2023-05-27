@@ -50,7 +50,7 @@ public class PaymentsController {
         service.delete(id);
     }
 
-    @GetMapping("/check-payment-process")
+    @PostMapping("/check-payment-process")
     public ClientResponse checkIfPaymentAvailable(@RequestBody CreateRentalPaymentRequest request) {
         return service.processRentalPayment(request);
     }

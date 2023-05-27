@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        default-label: main
+        git:
+          uri: https://github.com/eamre/config-server-t
+  profiles:
+    active: prod
+server:
+  port: 8888
+

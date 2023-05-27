@@ -1,6 +1,6 @@
 package com.kodlamaio.paymentservice.business.rules;
 
-import com.kodlamaio.commonpackage.utils.dto.CreateRentalPaymentRequest;
+import com.kodlamaio.commonpackage.utils.dto.PaymentRequest;
 import com.kodlamaio.commonpackage.utils.exceptions.BusinessException;
 import com.kodlamaio.paymentservice.repository.PaymentRepository;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class PaymentBusinessRules {
         }
     }
 
-    public void checkIfPaymentIsValid(CreateRentalPaymentRequest request) {
+    public void checkIfPaymentIsValid(PaymentRequest request) {
         if (!repository.existsByCardNumberAndCardHolderAndCardExpirationYearAndCardExpirationMonthAndCardCvv(
                 request.getCardNumber(),
                 request.getCardHolder(),

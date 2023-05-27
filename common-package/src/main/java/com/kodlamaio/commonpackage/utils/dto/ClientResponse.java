@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ClientResponse {
     private boolean isSuccess;
     private String message;
+
 }
