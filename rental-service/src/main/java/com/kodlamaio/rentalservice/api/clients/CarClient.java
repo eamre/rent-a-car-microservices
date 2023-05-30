@@ -1,6 +1,7 @@
 package com.kodlamaio.rentalservice.api.clients;
 
 import com.kodlamaio.commonpackage.utils.dto.ClientResponse;
+import com.kodlamaio.commonpackage.utils.dto.GetCarResponse;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,5 +15,7 @@ public interface CarClient {
     @Retry(name = "rentalInventoryRetry")
     ClientResponse checkIfCarAvailable(@PathVariable UUID carId);
 
-
+    @GetMapping(value = "/api/cars/{carId}")
+    @Retry(name = "rentalInventoryRetry")
+    GetCarResponse getById(@PathVariable UUID carId);
 }

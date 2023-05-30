@@ -4,6 +4,7 @@ import com.kodlamaio.commonpackage.events.inventory.CarCreatedEvent;
 import com.kodlamaio.commonpackage.events.inventory.CarDeletedEvent;
 import com.kodlamaio.commonpackage.kafka.producer.KafkaProducer;
 import com.kodlamaio.commonpackage.utils.dto.ClientResponse;
+import com.kodlamaio.commonpackage.utils.dto.GetCarResponse;
 import com.kodlamaio.commonpackage.utils.exceptions.BusinessException;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import com.kodlamaio.inventoryservice.business.abstracts.CarService;
@@ -11,7 +12,6 @@ import com.kodlamaio.inventoryservice.business.dto.requests.create.CreateCarRequ
 import com.kodlamaio.inventoryservice.business.dto.requests.update.UpdateCarRequest;
 import com.kodlamaio.inventoryservice.business.dto.responses.create.CreateCarResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
-import com.kodlamaio.inventoryservice.business.dto.responses.get.GetCarResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.update.UpdateCarResponse;
 import com.kodlamaio.inventoryservice.business.rules.CarBusinessRules;
 import com.kodlamaio.inventoryservice.entities.Car;

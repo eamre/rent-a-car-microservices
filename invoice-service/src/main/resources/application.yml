@@ -1,8 +1,8 @@
 spring:
   application:
-    name: INVENTORY-SERVICE
+    name: INVOICE-SERVICE
   cloud:
     config:
-      profile: prod
+      profile: dev
   config:
     import: optional:configserver:http://localhost:8888
