@@ -23,6 +23,6 @@ public class Model {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model", cascade = CascadeType.REMOVE)
     private List<Car> cars;
 }

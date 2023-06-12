@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.business.dto.requests.update;
 
+import com.kodlamaio.commonpackage.utils.annotations.NotFutureYear;
 import com.kodlamaio.commonpackage.utils.constants.Regex;
 import com.kodlamaio.inventoryservice.entities.enums.State;
 import jakarta.validation.constraints.Min;
@@ -21,6 +22,7 @@ public class UpdateCarRequest {
     @NotNull
     private UUID modelId;
     @Min(value = 2000)
+    @NotFutureYear
     private int modelYear;
     @NotBlank
     @Pattern(regexp = Regex.Plate)

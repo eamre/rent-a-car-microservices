@@ -6,3 +6,19 @@ spring:
       profile: dev
   config:
     import: optional:configserver:http://localhost:8888
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
+    zipkin:
+      tracing:
+        endpoint: http://192.168.186.28:9411/api/v2/spans
