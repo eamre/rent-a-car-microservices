@@ -189,7 +189,48 @@ The config server of the Rent A Car application runs on port 8888 and provides c
 
 <img src="https://miro.medium.com/v2/resize:fit:636/1*obwqAslb4nI0S9nVzdI4PA.jpeg" width="500"  />
 
+<br/>
 
+## Docker
+**What is Docker?**
+Docker is an open-source platform for creating, deploying, and managing containers. It enables developers to package applications with their dependencies in isolated environments known as containers, making it easier to deliver applications consistently and efficiently.
+
+**How Docker Containers Work?**
+Docker containers are lightweight and portable environments that isolate and run applications with all their dependencies. Each container operates a single process, allowing multiple applications to be managed on a single host machine.
+
+**Benefits of Docker**
+
+- **Consistent and Isolated Environment:** Docker provides predictable and scalable environments, boosting productivity and reducing debugging time.
+- **Cost-effective:** Docker accelerates deployment and resource allocation, saving time and resources.
+- **Portability:** Docker ensures that containerized applications run smoothly on any system with Docker.
+- **Scalability:** Docker allows easy scaling of containers based on application demands, managing workloads efficiently.
+
+<img src= "https://civo-com-assets.ams3.digitaloceanspaces.com/content_images/2258.blog.JPG?1678958065" width="380"  />
+
+### Docker Compose
+
+Docker Compose is a tool that helps you to run and manage multiple Docker containers together. It lets you define a single configuration file for your application's containers, and then run or manage them from a single command.
+
+A Docker Compose file is a YML file that contains the definition of your application's containers. The file specifies the name, image, and port mapping for each container, as well as any other configuration options that you need.
+
+Docker Compose is a powerful tool that can help you to run and manage complex applications with multiple Docker containers.
+
+**The Docker Compose file consists of the following sections:**
+
+- Version: Specifies which version of compose the compose file uses. Each version may contain its own features and new improvements.
+- Services: Contains a list of containers that should be launched by Docker Compose.
+- Volumes: Allows you to manage data storage for containers. It ensures important data is persisted across container restarts and can be shared between containers or with the host machine, making it convenient for managing critical information in your microservices application.
+- Networks: Defines network connections between containers.
+- Environment: Environment variables are settings that affect the operation of the container. For example, an environment variable can be a database connection URL to be used for the container.
+  
+**Some Docker Compose Commands**
+```
+docker-compose up -d - This command starts all of the containers defined in your Docker Compose file.
+docker-compose down - This command stops and removes all of the containers defined in your Docker Compose file.
+docker-compose build - This command builds all of the images defined in your Docker Compose file.
+docker-compose ps - This command lists all of the running containers defined in your Docker Compose file.
+docker-compose logs - This command shows the logs for all of the running containers defined in your Docker Compose file.
+```
 <br/>
 
 ## Kafka KRaft
