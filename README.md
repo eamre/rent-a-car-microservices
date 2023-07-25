@@ -246,3 +246,45 @@ docker-compose logs - This command shows the logs for all of the running contain
 - It optimizes performance to handle high data throughput and low-latency requirements, making it suitable for real-time streaming applications.
 
 <img src="https://miro.medium.com/v2/resize:fit:1042/0*ubsIB5P8egtyni9g.png" width="500"  />
+
+**Setting Up Kafka with Docker Compose**
+- Install Docker Desktop: Ensure you have Docker Desktop installed on your machine. If you don't have it installed, follow the Docker Desktop installation instructions for your operating system.
+- Start Kafka: Open your terminal or command prompt and navigate to the directory containing the Docker Compose file. Run the following command to start the Keycloak container:
+```
+docker-compose up -d kafka
+```
+- After the kafka container run, you can use the kafka in the project.
+  
+<br/>
+
+## Keycloak
+Keycloak is an important part of our microservices architecture, helping us manage user identity and access. It simplifies user authentication, access control, and single sign-on (SSO) for our applications. By using Keycloak, we can centrally handle user identities, making it easier to authenticate and authorize users in our microservices.
+
+**Features and Benefits:**
+
+- User Authentication: Keycloak supports various secure ways to access our services, including username/password, social login, and multi-factor authentication.
+
+- Role-Based Access Control: We can set specific access rules based on user roles, allowing or denying access to certain microservices or parts of the application.
+
+- Single Sign-On (SSO): With Keycloak's SSO feature, users only need to sign in once to access multiple services, saving time and improving security.
+
+- Integration with Spring Security: Keycloak works well with Spring Security, making it simpler to set up and manage user authentication and access in our microservices.
+
+- Centralized User Management: Keycloak provides an easy-to-use interface to manage user accounts and permissions from a single place.
+
+<img src="https://walkingtree.tech/wp-content/uploads/2021/11/Untitled-presentation.png" width="500" />
+
+**Setting Up Keycloak with Docker Compose**
+- Install Docker Desktop: Ensure you have Docker Desktop installed on your machine. If you don't have it installed, follow the Docker Desktop installation instructions for your operating system.
+- Start Keycloak: Open your terminal or command prompt and navigate to the directory containing the Docker Compose file. Run the following command to start the Keycloak container:
+```
+docker-compose up -d keycloak
+```
+- Access Keycloak Interface: Open your web browser and navigate to http://localhost:8080/auth. You will be redirected to the Keycloak login page.
+- Log in to Keycloak: Log in using the admin username and password specified in the Docker Compose file or its environment variables. For example, the default username and password could be "admin" for both.
+- Create Realm: Once logged in, you can create a new realm for your project. A realm is a security domain where your users, roles, and clients are defined. Click on the "Create realm" button to create a new realm.
+- Manage Clients and Users: Within the realm, you can manage clients (applications that use Keycloak for authentication) and users. Create clients for your microservices and add users to the realm as needed.
+- Configure Clients: For each client, you can configure settings like redirect URIs, client scopes, and protocol mappers to tailor the authentication flow to your microservices' needs.
+- Save Changes: Make sure to save your configurations and settings within Keycloak.
+
+<img src="https://www.keycloak.org/resources/images/guides/add-user.png" width="600" />
