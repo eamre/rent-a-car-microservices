@@ -276,15 +276,164 @@ Keycloak is an important part of our microservices architecture, helping us mana
 
 **Setting Up Keycloak with Docker Compose**
 - Install Docker Desktop: Ensure you have Docker Desktop installed on your machine. If you don't have it installed, follow the Docker Desktop installation instructions for your operating system.
+  
 - Start Keycloak: Open your terminal or command prompt and navigate to the directory containing the Docker Compose file. Run the following command to start the Keycloak container:
 ```
 docker-compose up -d keycloak
 ```
 - Access Keycloak Interface: Open your web browser and navigate to http://localhost:8080/auth. You will be redirected to the Keycloak login page.
+  
 - Log in to Keycloak: Log in using the admin username and password specified in the Docker Compose file or its environment variables. For example, the default username and password could be "admin" for both.
+  
 - Create Realm: Once logged in, you can create a new realm for your project. A realm is a security domain where your users, roles, and clients are defined. Click on the "Create realm" button to create a new realm.
+  
 - Manage Clients and Users: Within the realm, you can manage clients (applications that use Keycloak for authentication) and users. Create clients for your microservices and add users to the realm as needed.
+  
 - Configure Clients: For each client, you can configure settings like redirect URIs, client scopes, and protocol mappers to tailor the authentication flow to your microservices' needs.
+  
 - Save Changes: Make sure to save your configurations and settings within Keycloak.
 
 <img src="https://www.keycloak.org/resources/images/guides/add-user.png" width="600" />
+
+<br/>
+
+## Prometheus
+Prometheus is a powerful open-source monitoring and alerting toolkit that we've integrated into our microservices architecture. It provides comprehensive metrics collection and allows us to monitor the performance and health of our services effectively. With Prometheus, we can set up custom metrics and visualize the collected data using Grafana dashboards.
+
+To enable metrics gathering in our Spring Boot applications, we leverage two key dependencies:
+```
+<dependency>
+   <groupId>io.micrometer</groupId>
+   <artifactId>micrometer-registry-prometheus</artifactId>
+   <version>${micrometer.version}</version>
+</dependency>
+<dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+**spring-boot-starter-actuator:** Spring Boot starter module that provides production-ready features for monitoring and managing our applications. It includes various endpoints, such as /actuator/metrics, that expose application metrics collected by Micrometer. Additionally, the Actuator provides health checks and other useful information about our application.
+
+**micrometer-registry-prometheus:** The micrometer-registry-prometheus dependency is a part of Micrometer, a metrics instrumentation library used in Spring Boot applications. It allows us to export application metrics in a format that Prometheus can scrape and store. 
+
+### Configuring Prometheus
+A file named prometheus.yml is used to configure Prometheus. In this file, you can specify from which sources Prometheus should receive metric data, how often it should receive it, what rules it should apply, and what settings it should use.
+
+prometheus.yml file contains the following sections:
+
+- **global:** Specifies the general settings of Prometheus. For example, scrape_interval specifies the interval at which Prometheus will receive metric data, evaluation_interval specifies the interval at which Prometheus will evaluate rules.
+
+- **rule_files:** Specifies the list of rule files that Prometheus will apply. Rule files allow Prometheus to perform calculations on metric data and send warning notifications.
+
+- **scrape_configs:** Specifies a list of sources from which Prometheus will retrieve metric data. For each source, a job_name, a scrape_interval, a metrics_path and one or more targets are specified. Job_name specifies the name of the source, scrape_interval specifies the interval at which to retrieve metrics data from the source, metrics_path specifies the path where the source delivers its metrics data, and target specifies the address of the source.
+
+```
+global:
+  scrape_interval: 15s # Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+
+scrape_configs:
+  - job_name: 'filter-service'
+    scrape_interval: 2s
+    metrics_path: '/FILTER-SERVICE/actuator/prometheus'
+    static_configs:
+      - targets: [ '192.168.186.28:9010' ]
+  - job_name: 'inventory-service'
+    scrape_interval: 2s
+    metrics_path: '/INVENTORY-SERVICE/actuator/prometheus'
+    static_configs:
+      - targets: [ '192.168.186.28:9010' ]
+```
+For example, in this code, two resources are defined in the prometheus.yml file: filter-service and inventory-service. Both are Spring Boot applications running at 192.168.186.28:9010 and serving metric data in the path /actuator/prometheus. Prometheus will receive metric data from these sources every 2 seconds.
+
+<img src="https://i.ibb.co/T1ftJYn/act.png" width="600" />
+
+## Grafana
+Grafana is a powerful open source monitoring and visualisation tool that we use in our microservice architecture. It allows us to query, visualise and alert on our application metrics collected by Prometheus. Grafana's intuitive and customisable dashboards allow us to gain real-time information about the health and performance of our services.
+
+### Key Features
+
+- **Dashboard Visualization:** Grafana provides a user-friendly interface to create custom dashboards that visualize metrics in real-time. We can design graphs, charts, and tables to monitor various aspects of our microservices, facilitating quick decision-making and troubleshooting. After adding your data source, you can make use of the ready-made panels offered by Grafana or create your own panels.
+
+- **Alerting and Notifications:** Grafana offers flexible alerting rules that allow us to set up alerts based on specific thresholds or conditions. We receive notifications via email, Slack, or other communication channels when critical metrics breach predefined thresholds.
+
+- **Data Source Integration:** Grafana integrates seamlessly with various data sources, and in our case, it fetches data from Prometheus. This integration enables us to explore, analyze, and graph metrics collected from multiple microservices in a centralized location.
+
+- **Plugin Support:** Grafana's extensible nature allows us to extend its capabilities through plugins. We can explore and install various community-contributed plugins to enhance the monitoring experience and meet specific requirements.
+
+<img src="https://www.linkpicture.com/q/ds_19.png" width="800" />
+
+<img src="https://www.linkpicture.com/q/grafana.png" width="800" />
+
+## Zipkin
+Zipkin is a distributed tracing system that we've integrated into our microservices architecture. It helps us track and analyze the flow of requests across various microservices, providing valuable insights into the performance and behavior of our distributed system. By tracing the journey of a request as it passes through different services, we can identify bottlenecks, diagnose issues, and optimize the overall system.
+
+To enable observation and tracing capabilities in our microservices architecture, we need to include the following dependencies:
+
+```
+<dependency>
+   <groupId>io.micrometer</groupId>
+   <artifactId>micrometer-observation</artifactId>
+</dependency>
+<dependency>
+   <groupId>io.micrometer</groupId>
+   <artifactId>micrometer-tracing-bridge-brave</artifactId>
+</dependency>
+<dependency>
+   <groupId>io.zipkin.reporter2</groupId>
+   <artifactId>zipkin-reporter-brave</artifactId>
+</dependency>
+```
+**micrometer-observation:** This library provides essential observability features for our application, enabling the collection and reporting of metrics and statistics about our system's behavior and performance.
+
+**micrometer-tracing-bridge-brave:** This dependency acts as a bridge between Micrometer and Brave, a distributed tracing library. It allows us to integrate distributed tracing with our Micrometer-based metrics, enabling us to observe the flow of requests across microservices.
+
+**zipkin-reporter-brave:** This dependency provides the necessary components for reporting traces to the Zipkin server. It works in conjunction with the micrometer-tracing-bridge-brave to send tracing data to the Zipkin endpoint.
+
+### Key Features
+
+- **Request Tracing:** Zipkin captures the timing and sequence of requests and their corresponding responses as they flow through the microservices. This allows us to visualize the entire request flow and identify the path taken by each request.
+
+- **Latency Analysis:** With Zipkin, we can measure the latency of each service in the request chain. This helps us identify services that might be causing delays and optimize their performance.
+
+- **Dependency Mapping:** Zipkin creates a dependency map of all our microservices based on request traces. This mapping provides a clear picture of the interactions between services, helping us understand the dependencies within our system.
+
+### Zipkin Configuration
+Configure your application's application.yml file with the provided settings. Upon running your microservices, the metrics endpoint will be accessible to Prometheus for data scraping, and traces will be sent to the specified Zipkin endpoint for distributed tracing.
+
+```
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
+    zipkin:
+      tracing:
+        endpoint: http://{your ip address}/api/v2/spans
+```
+
+**management.endpoint.metrics.enabled:** This property indicates whether the /actuator/metrics endpoint is enabled. This endpoint presents your application's metrics data. is set to true.
+
+**management.endpoint.prometheus.enabled:** This property indicates whether the /actuator/prometheus endpoint is enabled. This endpoint presents metric data in a format understandable by Prometheus. is set to true.
+
+**management.endpoints.web.exposure.include:** This property specifies the list of management endpoints accessible via the web. It is set to "*", which means that all endpoints are accessible.
+
+**management.tracing.sampling.probability:** This property specifies the sampling rate of tracing data. It takes a value between 0 and 1. It is set to 1.0, which means that all requests are traced.
+
+**management.tracing.zipkin.tracing.endpoint:** This property specifies the address of the Zipkin server. The Zipkin server is a service through which your application collects and stores tracing data.
+
+<img src="https://www.linkpicture.com/q/zipki.png" width="800" />
+
+<img src="https://www.linkpicture.com/q/zipkin2.png" width="800" />
