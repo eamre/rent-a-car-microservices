@@ -24,8 +24,8 @@ public class BrandManager implements BrandService {
     private final BrandRepository repository;
     private final ModelMapperService mapper;
     private final KafkaProducer producer;
-
     //private final InventoryProducer inventoryProducer;
+
     @Override
     public List<GetAllBrandsResponse> getAll() {
         var brands = repository.findAll();
